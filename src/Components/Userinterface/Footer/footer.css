@@ -430,3 +430,47 @@
         height: 16px;
     }
 }
+/* ── FOOTER CREDIT ─────────────────────────────────────── */
+.footer-credit {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.credit-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--muted, #555555);
+}
+
+.credit-link {
+    color: var(--accent, #e8ff47);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.credit-link:hover {
+    text-shadow: 0 0 10px rgba(232, 255, 71, 0.6);
+}
+
+/* Blinking Heart */
+.heart {
+    color: var(--accent, #e8ff47);
+    margin: 0 4px;
+    display: inline-block;
+    animation: heartbeat 1.2s infinite;
+}
+
+/* Heart Animation */
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+        text-shadow: 0 0 5px rgba(232, 255, 71, 0.4);
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.6;
+        text-shadow: 0 0 15px rgba(232, 255, 71, 0.8);
+    }
+}

@@ -165,7 +165,8 @@
 }
 
 .nav-cta:hover {
-    background: #d4e83d;
+    color: #d4e83d;
+    background: black;
     transform: translateY(-2px);
     box-shadow: 0 4px 16px rgba(232, 255, 71, 0.3);
 }

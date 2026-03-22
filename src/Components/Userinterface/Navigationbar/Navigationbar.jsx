@@ -48,7 +48,7 @@ function Navigationbar() {
             <span className="status-dot"></span>
             <span className="status-text">LIVE</span>
           </div>
-          <a href="/dashboard.html" className="nav-cta">
+          <a href="/login" className="nav-cta">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

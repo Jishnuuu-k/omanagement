@@ -101,6 +101,22 @@ function Footer() {
             <span className="copy-rights">ALL RIGHTS RESERVED</span>
           </div>
 
+          {/* Developer Credit */}
+<div className="footer-credit">
+  <span className="credit-text">
+    Developed with 
+    <span className="heart">❤</span> by{" "}
+    <a
+      href="https://www.instagram.com/jishnuuuk/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="credit-link"
+    >
+      IWANNABEATECHIEE
+    </a>
+  </span>
+</div>
+
           {/* Social Links */}
           <div className="footer-social">
             <a href="#twitter" className="social-link" aria-label="Twitter">
