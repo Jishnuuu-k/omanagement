@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../../../Axios/Axio";
 import "./register.css";
 
-function Register({ onRegisterSuccess }) {
+function Register() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     employeeId: "",
     fullName: "",
@@ -11,35 +15,36 @@ function Register({ onRegisterSuccess }) {
     password: "",
     confirmPassword: "",
   });
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-
-  const registrationDate = new Date().toLocaleDateString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
 
   const validate = () => {
     const errs = {};
     if (!formData.employeeId.trim()) errs.employeeId = "Required";
     if (!formData.fullName.trim()) errs.fullName = "Required";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       errs.email = "Invalid email";
-    if (!/^\d{10}$/.test(formData.mobile))
+    }
+    if (!/^\d{10}$/.test(formData.mobile)) {
       errs.mobile = "Must be 10 digits";
+    }
     if (!formData.dob) errs.dob = "Required";
-    if (formData.password.length < 8)
+    if (formData.password.length < 8) {
       errs.password = "Min 8 characters";
-    if (formData.password !== formData.confirmPassword)
+    }
+    if (formData.password !== formData.confirmPassword) {
       errs.confirmPassword = "Passwords don't match";
+    }
     return errs;
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -49,21 +54,35 @@ function Register({ onRegisterSuccess }) {
       setErrors(errs);
       return;
     }
-    setLoading(true);
-    // Simulate API call — replace with real backend
-    await new Promise((r) => setTimeout(r, 1500));
-    setLoading(false);
-    if (onRegisterSuccess) onRegisterSuccess(formData.email);
+    try {
+      setLoading(true);
+      const res = await api.post("/user/register", {
+        employeeId: formData.employeeId,
+        fullName: formData.fullName,
+        email: formData.email,
+        mobile: formData.mobile,
+        password: formData.password,
+        dob: formData.dob,
+      });
+      const userId = res.data.data._id;
+      localStorage.setItem("userId", userId);
+      alert("OTP sent to your email");
+      navigate("/verifyotp");
+    } catch (error) {
+      alert(error?.response?.data?.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fields = [
-    { name: "employeeId", label: "Employee ID", type: "text", icon: "◈", placeholder: "EMP-0001" },
-    { name: "fullName", label: "Full Name", type: "text", icon: "◉", placeholder: "John Doe" },
-    { name: "email", label: "Email Address", type: "email", icon: "◎", placeholder: "john@company.com" },
-    { name: "mobile", label: "Mobile Number", type: "tel", icon: "◌", placeholder: "9876543210" },
-    { name: "dob", label: "Date of Birth", type: "date", icon: "◆" },
-    { name: "password", label: "Password", type: "password", icon: "◈", placeholder: "Min 8 characters" },
-    { name: "confirmPassword", label: "Confirm Password", type: "password", icon: "◈", placeholder: "Repeat password" },
+    { name: "employeeId", label: "Employee ID", icon: "⌗", placeholder: "EMP-00123", type: "text", span: false },
+    { name: "fullName", label: "Full Name", icon: "◈", placeholder: "John Doe", type: "text", span: false },
+    { name: "email", label: "Email Address", icon: "◎", placeholder: "john@company.com", type: "email", span: false },
+    { name: "mobile", label: "Mobile", icon: "◉", placeholder: "10-digit number", type: "tel", span: false },
+    { name: "dob", label: "Date of Birth", icon: "◷", placeholder: "", type: "date", span: false },
+    { name: "password", label: "Password", icon: "◆", placeholder: "Min 8 characters", type: "password", span: false },
+    { name: "confirmPassword", label: "Confirm Password", icon: "◇", placeholder: "Re-enter password", type: "password", span: true },
   ];
 
   return (
@@ -72,36 +91,42 @@ function Register({ onRegisterSuccess }) {
       <div className="reg-glow" />
 
       <div className="reg-wrapper">
-        {/* Left decorative panel */}
+        {/* ── LEFT ASIDE ── */}
         <aside className="reg-aside">
           <div className="aside-tag">
             <span className="aside-dot" />
-            EMPLOYEE PORTAL
+            Employee Portal
           </div>
-          <h2 className="aside-title">
-            JOIN THE<br />
-            <span className="aside-accent">TEAM.</span>
-          </h2>
+
+          <div>
+            <h1 className="aside-title">
+              JOIN<br />
+              THE<br />
+              <span className="aside-accent">TEAM</span>
+            </h1>
+          </div>
+
           <p className="aside-desc">
-            Create your employee account to access internal dashboards, reports,
-            and collaboration tools — all in one place.
+            Create your employee account to access the internal dashboard, track attendance, and manage your workspace.
           </p>
+
           <div className="aside-stats">
             <div className="aside-stat">
-              <span className="aside-stat-val">12K+</span>
-              <span className="aside-stat-lbl">EMPLOYEES</span>
+              <span className="aside-stat-val">2K+</span>
+              <span className="aside-stat-lbl">Employees</span>
             </div>
             <div className="aside-divider" />
             <div className="aside-stat">
               <span className="aside-stat-val">99.9%</span>
-              <span className="aside-stat-lbl">UPTIME</span>
+              <span className="aside-stat-lbl">Uptime</span>
             </div>
             <div className="aside-divider" />
             <div className="aside-stat">
-              <span className="aside-stat-val">256</span>
-              <span className="aside-stat-lbl">BIT ENC.</span>
+              <span className="aside-stat-val">24/7</span>
+              <span className="aside-stat-lbl">Support</span>
             </div>
           </div>
+
           <div className="aside-pulse">
             <div className="pulse-line">
               <div className="pulse-dot" />
@@ -109,7 +134,7 @@ function Register({ onRegisterSuccess }) {
           </div>
         </aside>
 
-        {/* Form card */}
+        {/* ── RIGHT FORM CARD ── */}
         <main className="reg-card">
           <div className="card-header-row">
             <div className="card-dots">
@@ -117,23 +142,23 @@ function Register({ onRegisterSuccess }) {
               <span className="dot amber" />
               <span className="dot green" />
             </div>
-            <span className="card-label">registration.form</span>
+            <span className="card-label">REGISTER.TSX — EMPLOYEE ONBOARDING</span>
           </div>
 
           <div className="card-inner">
             <div className="card-heading">
-              <h1 className="form-title">Create Account</h1>
+              <h2 className="form-title">Create Account</h2>
               <p className="form-subtitle">
-                Registered on <strong>{registrationDate}</strong>
+                Fill in your details &mdash; <strong>OTP verification required</strong>
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} noValidate className="reg-form">
+            <form className="reg-form" onSubmit={handleSubmit} noValidate>
               <div className="fields-grid">
-                {fields.map(({ name, label, type, icon, placeholder }) => (
+                {fields.map(({ name, label, icon, placeholder, type, span }) => (
                   <div
-                    className={`field-group ${errors[name] ? "field-error" : ""}`}
                     key={name}
+                    className={`field-group${errors[name] ? " field-error" : ""}${span ? " field-span" : ""}`}
                   >
                     <label className="field-label">
                       <span className="field-icon">{icon}</span>
@@ -141,12 +166,11 @@ function Register({ onRegisterSuccess }) {
                     </label>
                     <input
                       className="field-input"
-                      type={type}
                       name={name}
+                      type={type}
+                      placeholder={placeholder}
                       value={formData[name]}
                       onChange={handleChange}
-                      placeholder={placeholder || ""}
-                      required
                       autoComplete="off"
                     />
                     {errors[name] && (
@@ -156,16 +180,12 @@ function Register({ onRegisterSuccess }) {
                 ))}
               </div>
 
-              <button
-                type="submit"
-                className={`reg-btn ${loading ? "reg-btn--loading" : ""}`}
-                disabled={loading}
-              >
+              <button className="reg-btn" type="submit" disabled={loading}>
                 {loading ? (
                   <span className="btn-spinner" />
                 ) : (
                   <>
-                    <span>REGISTER &amp; VERIFY</span>
+                    <span>Create Account</span>
                     <span className="btn-arrow">→</span>
                   </>
                 )}
@@ -173,7 +193,9 @@ function Register({ onRegisterSuccess }) {
 
               <p className="form-login-link">
                 Already have an account?{" "}
-                <a href="/login" className="link-accent">Sign in</a>
+                <a className="link-accent" href="/login">
+                  Sign in
+                </a>
               </p>
             </form>
           </div>

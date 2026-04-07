@@ -5,7 +5,6 @@ import Register from '../Components/Userinterface/Register/Register'
 function Registrationn() {
   return (
     <div>
-        <Navigationbar/>
         <Register/>
     </div>
   )
