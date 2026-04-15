@@ -78,9 +78,8 @@ function Banner() {
               </div>
               <div className="card-title">SYSTEM DASHBOARD</div>
             </div>
+{/* Mock Metrics */}
             <div className="card-body">
-              
-              {/* Mock Metrics */}
               <div className="metric-row">
                 <div className="metric">
                   <div className="metric-label">// TOTAL OT</div>

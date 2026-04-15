@@ -52,9 +52,29 @@ function AlltimeRecords() {
     }
   };
 
-  useEffect(() => {
-    fetchRecords();
-  }, []);
+
+// HERE HERE HERE
+
+
+useEffect(() => {
+  const fetchRecords = async () => {
+    try {
+      const res = await fetch("/api/attendance/all-records", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      setRecords(data.records || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  fetchRecords();
+}, [token]);
+
 
   return (
     <div className="records-root">
