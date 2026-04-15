@@ -82,11 +82,11 @@ function Banner() {
             <div className="card-body">
               <div className="metric-row">
                 <div className="metric">
-                  <div className="metric-label">// TOTAL OT</div>
+                  <div className="metric-label">TOTAL OT</div>
                   <div className="metric-value">142.5 <span>HRS</span></div>
                 </div>
                 <div className="metric">
-                  <div className="metric-label">// TRACKED DAYS</div>
+                  <div className="metric-label">TRACKED DAYS</div>
                   <div className="metric-value">22 <span>DAYS</span></div>
                 </div>
               </div>

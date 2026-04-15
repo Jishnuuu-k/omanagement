@@ -121,7 +121,7 @@ function Dashboard() {
       {/* HEADER */}
       <header className="dashboard-header">
         <div className="header-left">
-          <div className="logo-tag">// OVERTIME TRACKER v2.0</div>
+          <div className="logo-tag">OVERTIME TRACKER v2.0</div>
           <h1 className="dashboard-title">
             OT <span className="accent">MGMT</span><br />DASHBOARD
           </h1>

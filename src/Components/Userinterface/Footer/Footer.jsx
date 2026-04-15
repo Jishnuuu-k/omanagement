@@ -12,7 +12,7 @@ function Footer() {
           {/* Brand Column */}
           <div className="footer-col footer-brand">
             <div className="footer-logo">
-              <div className="logo-tag">// OT TRACKER</div>
+              <div className="logo-tag">OT TRACKER</div>
               <div className="logo-name">
                 MGMT<span className="accent">SYSTEM</span>
               </div>
