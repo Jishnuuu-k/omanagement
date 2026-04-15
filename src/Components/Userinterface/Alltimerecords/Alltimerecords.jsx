@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./alltimerecords.css";
 
 const API_BASE = "http://localhost:5000";
@@ -9,71 +9,53 @@ function AlltimeRecords() {
   const [loading, setLoading] = useState(false);
   const [stats, setStats] = useState({ totalDays: 0, totalHours: 0, totalOT: 0 });
 
-  const fetchRecords = async () => {
-    if (!token) {
-      alert("Unauthorized. Please login again.");
+const fetchRecords = useCallback(async () => {
+  if (!token) {
+    alert("Unauthorized. Please login again.");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const res = await fetch(`${API_BASE}/api/attendance/all-records`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      alert(data.error || "Failed to fetch records");
       return;
     }
 
-    setLoading(true);
+    const recordsData = data.records || [];
+    setRecords(recordsData);
 
-    try {
-      const res = await fetch(`${API_BASE}/api/attendance/all-records`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+    const totalDays = recordsData.length;
+    const totalHours = recordsData.reduce((sum, r) => sum + (r.workedHours || 0), 0);
+    const totalOT = recordsData.reduce((sum, r) => sum + (r.otHours || 0), 0);
 
-      const data = await res.json();
+    setStats({
+      totalDays,
+      totalHours: totalHours.toFixed(2),
+      totalOT: totalOT.toFixed(2)
+    });
 
-      if (!data.success) {
-        alert(data.error || "Failed to fetch records");
-        return;
-      }
-
-      const recordsData = data.records || [];
-      setRecords(recordsData);
-      
-      // Calculate statistics
-      const totalDays = recordsData.length;
-      const totalHours = recordsData.reduce((sum, r) => sum + (r.workedHours || 0), 0);
-      const totalOT = recordsData.reduce((sum, r) => sum + (r.otHours || 0), 0);
-      
-      setStats({
-        totalDays,
-        totalHours: totalHours.toFixed(2),
-        totalOT: totalOT.toFixed(2)
-      });
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong while fetching records");
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong while fetching records");
+  } finally {
+    setLoading(false);
+  }
+}, [token]);
 
 // HERE HERE HERE
-
-
 useEffect(() => {
-  const fetchRecords = async () => {
-    try {
-      const res = await fetch("/api/attendance/all-records", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await res.json();
-      setRecords(data.records || []);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   fetchRecords();
-}, [token]);
+}, [fetchRecords]);
 
 
   return (
