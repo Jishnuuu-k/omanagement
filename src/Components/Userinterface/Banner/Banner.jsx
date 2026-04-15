@@ -6,7 +6,7 @@ function Banner() {
     <section className="banner">
       <div className="banner-container">
         
-        {/* Hero Content */}
+
         <div className="hero-content">
           
           <div className="hero-tag">
@@ -45,7 +45,7 @@ function Banner() {
             </a>
           </div>
 
-          {/* Stats Row */}
+
           <div className="hero-stats">
             <div className="stat-item">
               <div className="stat-value">99.9%</div>
@@ -65,10 +65,10 @@ function Banner() {
 
         </div>
 
-        {/* Hero Visual */}
+
         <div className="hero-visual">
           
-          {/* Animated Dashboard Preview */}
+
           <div className="visual-card">
             <div className="card-header">
               <div className="card-dots">
@@ -78,7 +78,7 @@ function Banner() {
               </div>
               <div className="card-title">SYSTEM DASHBOARD</div>
             </div>
-{/* Mock Metrics */}
+
             <div className="card-body">
               <div className="metric-row">
                 <div className="metric">
@@ -90,8 +90,6 @@ function Banner() {
                   <div className="metric-value">22 <span>DAYS</span></div>
                 </div>
               </div>
-
-              {/* Mock Chart Bars */}
               <div className="chart-preview">
                 <div className="chart-bar" style={{height: '60%'}}></div>
                 <div className="chart-bar" style={{height: '80%'}}></div>
@@ -101,7 +99,7 @@ function Banner() {
                 <div className="chart-bar" style={{height: '55%'}}></div>
               </div>
 
-              {/* Pulse Line */}
+
               <div className="pulse-line">
                 <span className="pulse-dot"></span>
               </div>
@@ -109,7 +107,7 @@ function Banner() {
             </div>
           </div>
 
-          {/* Floating Elements */}
+
           <div className="float-element float-1">
             <div className="float-icon">◆</div>
             <div className="float-text">REAL-TIME SYNC</div>
@@ -123,7 +121,7 @@ function Banner() {
 
       </div>
 
-      {/* Scroll Indicator */}
+   
       <div className="scroll-indicator">
         <div className="scroll-line"></div>
         <div className="scroll-text">SCROLL TO EXPLORE</div>
