@@ -50,7 +50,7 @@ function Registerotp() {
     try {
       setLoading(true);
       const userId = localStorage.getItem("userId");
-      const res = await api.post("/user/verify-otp", {
+      await api.post("/user/verify-otp", {
         userId,
         otp: otpString,
       });

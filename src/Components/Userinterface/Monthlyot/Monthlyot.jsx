@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback  } from "react";
 import "./monthlyot.css";
 
 const API_BASE = "http://localhost:5000";
@@ -11,50 +11,50 @@ function Monthlyot() {
   const [loading, setLoading] = useState(false);
   const [currentMonth, setCurrentMonth] = useState("");
 
-  const fetchMonthlyOT = async () => {
-    if (!token) {
-      alert("Unauthorized. Please login again.");
+const fetchMonthlyOT = useCallback(async () => {
+  if (!token) {
+    alert("Unauthorized. Please login again.");
+    return;
+  }
+
+  setLoading(true);
+
+  try {
+    const res = await fetch(`${API_BASE}/api/attendance/calculate-ot`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      alert(data.error || "Failed to fetch OT data");
       return;
     }
 
-    setLoading(true);
+    setRecords(data.records || []);
+    setTotalOT(data.totalOt || 0);
 
-    try {
-      const res = await fetch(`${API_BASE}/api/attendance/calculate-ot`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await res.json();
-
-      if (!data.success) {
-        alert(data.error || "Failed to fetch OT data");
-        return;
-      }
-
-      setRecords(data.records || []);
-      setTotalOT(data.totalOt || 0);
-      
-      // Set current month from the first record if available
-      if (data.records && data.records.length > 0 && data.records[0].date) {
-        const date = new Date(data.records[0].date);
-        setCurrentMonth(date.toLocaleString('default', { month: 'long', year: 'numeric' }));
-      } else {
-        const now = new Date();
-        setCurrentMonth(now.toLocaleString('default', { month: 'long', year: 'numeric' }));
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong while fetching OT");
-    } finally {
-      setLoading(false);
+    if (data.records && data.records.length > 0 && data.records[0].date) {
+      const date = new Date(data.records[0].date);
+      setCurrentMonth(date.toLocaleString('default', { month: 'long', year: 'numeric' }));
+    } else {
+      const now = new Date();
+      setCurrentMonth(now.toLocaleString('default', { month: 'long', year: 'numeric' }));
     }
-  };
 
-  useEffect(() => {
-    fetchMonthlyOT();
-  }, []);
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong while fetching OT");
+  } finally {
+    setLoading(false);
+  }
+}, [token]);
+
+useEffect(() => {
+  fetchMonthlyOT();
+}, [fetchMonthlyOT]);
 
   // Calculate additional stats
   const totalWorked = records.reduce((sum, r) => sum + (r.workedHours || 0), 0);

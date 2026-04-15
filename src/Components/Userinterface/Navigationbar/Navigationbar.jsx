@@ -15,7 +15,7 @@ function Navigationbar() {
 
         <a href="/">
           <div className="nav-brand">
-            <div className="brand-tag">// OT TRACKER</div>
+            <div className="brand-tag">OT TRACKER</div>
             <div className="brand-name">
               MGMT<span className="accent">SYSTEM</span>
             </div>
