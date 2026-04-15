@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './navigationbar.css'
+import { Link } from "react-router-dom";
 
 function Navigationbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,9 +54,9 @@ function Navigationbar() {
               LOGOUT
             </button>
           ) : (
-            <a href="/login" className="nav-cta">
+            <Link to="/login" className="nav-cta">
               ENTER SYSTEM
-            </a>
+            </Link>
           )}
         </div>
 
