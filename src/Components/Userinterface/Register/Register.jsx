@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../../../Axios/Axio";
 import "./register.css";
 
@@ -193,9 +193,7 @@ function Register() {
 
               <p className="form-login-link">
                 Already have an account?{" "}
-                <a className="link-accent" href="/login">
-                  Sign in
-                </a>
+                <Link to="/login">Sign in</Link>
               </p>
             </form>
           </div>
