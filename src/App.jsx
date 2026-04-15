@@ -5,6 +5,8 @@ import Loginn from './Pages/Loginn';
 import Dashboardd from './Pages/Dashboardd';
 import Registrationn from './Pages/Registrationn';
 import Registerotpp from './Pages/Registerotpp';
+import Monthlyott from './Pages/Monthlyott';
+import Alltimerecordss from './Pages/Alltimerecordss';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Route path="/verifyotp" element={<Registerotpp />} />
       <Route path="/login" element={<Loginn />} />
       <Route path="/dashboard" element={<Dashboardd />} />
+      <Route path="/monthly-ot" element={<Monthlyott />} />
+      <Route path="/alltime-records" element={<Alltimerecordss />} />
     </Routes>
   )
 }

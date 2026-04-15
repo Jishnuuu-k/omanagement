@@ -17,36 +17,38 @@ function Login() {
     });
   };
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
-      const res = await fetch("http://localhost:5000/api/user/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(form)
-      });
+  const email = e.target[0].value;
+  const password = e.target[1].value;
 
-      const data = await res.json();
+  try {
+    const res = await fetch("http://localhost:5000/api/user/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-      if (!data.success) {
-        alert(data.message);
-        return;
-      }
+    const data = await res.json();
 
-      // ✅ Save token
-      localStorage.setItem("token", data.data.token);
-
-      // 🎯 Redirect
-      navigate("/dashboard");
-
-    } catch (err) {
-      console.error(err);
-      alert("Login failed");
+    if (!data.success) {
+      alert(data.message);
+      return;
     }
-  };
+
+    // ✅ STORE TOKEN
+    localStorage.setItem("token", data.data.token);
+    localStorage.setItem("user", JSON.stringify(data.data.user));
+
+    navigate("/dashboard");
+
+  } catch (err) {
+    alert("Login failed");
+  }
+};
 
   return (
     <section className="login-banner">
