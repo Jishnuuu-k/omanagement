@@ -193,7 +193,7 @@ function Register() {
 
               <p className="form-login-link">
                 Already have an account?{" "}
-                <Link to="/login">Sign in</Link>
+                <Link to="/login">Sign-in</Link>
               </p>
             </form>
           </div>
